@@ -25,16 +25,14 @@ public class ExpenseTrackerController {
   public ExpenseTrackerController(ExpenseTrackerModel model, ExpenseTrackerView view) {
     this.model = model;
     this.view = view;
+    // For the MVC architecture pattern, the Observer design pattern is being
+    // used to update the View after manipulating the Model.
+    this.model.register(this.view);
   }
 
   public void setFilter(TransactionFilter filter) {
     // Sets the Strategy class being used in the applyFilter method.
     this.filter = filter;
-  }
-
-  public void refresh() {
-    List<Transaction> transactions = model.getTransactions();
-    view.refreshTable(transactions);
   }
 
   public boolean addTransaction(double amount, String category) {
@@ -47,8 +45,7 @@ public class ExpenseTrackerController {
     
     Transaction t = new Transaction(amount, category);
     model.addTransaction(t);
-    view.getTableModel().addRow(new Object[]{t.getAmount(), t.getCategory(), t.getTimestamp()});
-    refresh();
+    view.update(model);
     return true;
   }
 
@@ -66,7 +63,7 @@ public class ExpenseTrackerController {
         }
       }
       model.setMatchedFilterIndices(rowIndexes);
-      view.highlightRows(model.getMatchedFilterIndices());
+      view.update(model);
     }
     else{
       JOptionPane.showMessageDialog(view, "No filter applied");
@@ -79,8 +76,7 @@ public class ExpenseTrackerController {
     if (rowIndex >= 0 && rowIndex < model.getTransactions().size()) {
       Transaction removedTransaction = model.getTransactions().get(rowIndex);
       model.removeTransaction(removedTransaction);
-      view.getTableModel().removeRow(rowIndex);
-      refresh();
+      view.update(model);
       // The undo was allowed.
       return true;
     }

@@ -9,6 +9,9 @@ public class ExpenseTrackerModel {
   //encapsulation - data integrity
   private List<Transaction> transactions;
   private List<Integer> matchedFilterIndices;
+
+  // This is applying the Observer design pattern.                          
+  // Specifically, this is the Observable class. 
     
   public ExpenseTrackerModel() {
     transactions = new ArrayList<Transaction>();
@@ -21,10 +24,14 @@ public class ExpenseTrackerModel {
       throw new IllegalArgumentException("The new transaction must be non-null.");
     }
     transactions.add(t);
+    // The previous filter is no longer valid.
+    matchedFilterIndices.clear();
   }
 
   public void removeTransaction(Transaction t) {
     transactions.remove(t);
+    // The previous filter is no longer valid.
+    matchedFilterIndices.clear();
   }
 
   public List<Transaction> getTransactions() {
@@ -52,5 +59,40 @@ public class ExpenseTrackerModel {
       List<Integer> copyOfMatchedFilterIndices = new ArrayList<Integer>();
       copyOfMatchedFilterIndices.addAll(this.matchedFilterIndices);
       return copyOfMatchedFilterIndices;
+  }
+
+  /**
+   * Registers the given ExpenseTrackerModelListener for
+   * state change events.
+   *
+   * @param listener The ExpenseTrackerModelListener to be registered
+   * @return If the listener is non-null and not already registered,
+   *         returns true. If not, returns false.
+   */   
+  public boolean register(ExpenseTrackerModelListener listener) {
+      // For the Observable class, this is one of the methods.
+      //
+      // TODO
+      return false;
+  }
+
+  public int numberOfListeners() {
+      // For testing, this is one of the methods.
+      //
+      //TODO
+      return 0;
+  }
+
+  public boolean containsListener(ExpenseTrackerModelListener listener) {
+      // For testing, this is one of the methods.
+      //
+      //TODO
+      return false;
+  }
+
+  protected void stateChanged() {
+      // For the Observable class, this is one of the methods.
+      //
+      //TODO
   }
 }

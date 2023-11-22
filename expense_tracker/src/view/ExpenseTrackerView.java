@@ -9,12 +9,14 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
+import model.ExpenseTrackerModel;
+import model.ExpenseTrackerModelListener;
 import model.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpenseTrackerView extends JFrame {
+public class ExpenseTrackerView extends JFrame implements ExpenseTrackerModelListener {
 
   private JTable transactionsTable;
   private JButton addTransactionBtn;
@@ -150,7 +152,7 @@ public class ExpenseTrackerView extends JFrame {
     }
   }
 
-  public void refreshTable(List<Transaction> transactions) {
+  protected void refreshTable(List<Transaction> transactions) {
       // Clear existing rows
       model.setRowCount(0);
       // Get row count
@@ -183,7 +185,7 @@ public class ExpenseTrackerView extends JFrame {
   }
 
 
-  public void highlightRows(List<Integer> rowIndexes) {
+  protected void highlightRows(List<Integer> rowIndexes) {
       // The row indices are being used as hashcodes for the transactions.
       // The row index directly maps to the the transaction index in the list.
       transactionsTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
@@ -236,6 +238,13 @@ public class ExpenseTrackerView extends JFrame {
   // Method to get the selected row index from the table
   public int getSelectedRowIndex() {
       return transactionsTable.getSelectedRow();
+  }
+
+  public void update(ExpenseTrackerModel model) {
+      refreshTable(model.getTransactions());
+      if (model.getMatchedFilterIndices().size() > 0) {
+	  highlightRows(model.getMatchedFilterIndices());
+      }
   }
     
 }

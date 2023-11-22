@@ -2,6 +2,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
@@ -303,6 +304,41 @@ public class TestExample {
 	assertFalse(didAddTransaction2);
         assertEquals(0, model.getTransactions().size());
         assertEquals(0.00, getTotalCost(), 0.01);
+    }
+
+    @Test
+    public void testRegisterFails() {
+	// Perform setup and check pre-conditions
+	ExpenseTrackerModel newModel = new ExpenseTrackerModel();
+	ExpenseTrackerView newView = null;
+	assertNotNull(newModel);
+	assertEquals(newModel.numberOfListeners(), 0);
+	assertNull(newView);
+	
+	// Call the unit under test
+	boolean registered = newModel.register(newView);
+
+	// Check the post-conditions
+	assertFalse(registered);
+	assertEquals(newModel.numberOfListeners(), 0);
+    }
+
+    @Test
+    public void testRegisterSucceeds() {
+	// Perform setup and check pre-conditions
+	ExpenseTrackerModel newModel = new ExpenseTrackerModel();
+	ExpenseTrackerView newView = new ExpenseTrackerView();
+	assertNotNull(model);
+	assertEquals(model.numberOfListeners(), 0);
+	assertNotNull(view);
+	
+	// Call the unit under test
+        boolean registered = newModel.register(view);
+
+	// Check the post-conditions
+	assertTrue(registered);
+	assertEquals(newModel.numberOfListeners(), 1);
+	assertTrue(newModel.containsListener(newView));
     }
 
     @After
