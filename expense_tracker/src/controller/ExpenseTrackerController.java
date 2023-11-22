@@ -65,7 +65,8 @@ public class ExpenseTrackerController {
           rowIndexes.add(rowIndex);
         }
       }
-      view.highlightRows(rowIndexes);
+      model.setMatchedFilterIndices(rowIndexes);
+      view.highlightRows(model.getMatchedFilterIndices());
     }
     else{
       JOptionPane.showMessageDialog(view, "No filter applied");
