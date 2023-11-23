@@ -328,9 +328,9 @@ public class TestExample {
 	// Perform setup and check pre-conditions
 	ExpenseTrackerModel newModel = new ExpenseTrackerModel();
 	ExpenseTrackerView newView = new ExpenseTrackerView();
-	assertNotNull(model);
-	assertEquals(model.numberOfListeners(), 0);
-	assertNotNull(view);
+	assertNotNull(newModel);
+	assertEquals(newModel.numberOfListeners(), 0);
+	assertNotNull(newView);
 	
 	// Call the unit under test
         boolean registered = newModel.register(view);
