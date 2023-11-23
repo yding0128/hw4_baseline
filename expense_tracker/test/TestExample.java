@@ -333,7 +333,7 @@ public class TestExample {
 	assertNotNull(newView);
 	
 	// Call the unit under test
-        boolean registered = newModel.register(view);
+        boolean registered = newModel.register(newView);
 
 	// Check the post-conditions
 	assertTrue(registered);
