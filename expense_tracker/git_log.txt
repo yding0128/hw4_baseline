@@ -1,3 +1,9 @@
+commit cd7fad893cf2f84adfded2c507f57e0cd262add4
+Author: angelading <yi.ding.2091@gmail.com>
+Date:   Tue Dec 5 23:07:15 2023 -0500
+
+    Added Debugging.pdf
+
 commit b4e6af6b0fa75433c23edc6663a0606780add631
 Author: angelading <yi.ding.2091@gmail.com>
 Date:   Tue Dec 5 23:01:49 2023 -0500
