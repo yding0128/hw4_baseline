@@ -12,3 +12,4 @@ public interface ExpenseTrackerModelListener
 {
     public void update(ExpenseTrackerModel model);
 }
+

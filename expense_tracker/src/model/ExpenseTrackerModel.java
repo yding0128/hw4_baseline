@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The ExpenseTrackerModel class represents the model in the Expense Tracker
+ * application, applying the Observer design pattern. This class acts as the 
+ * Observable (subject) where observers (listeners) can register and receive 
+ * notifications about changes in the model's state.
+ */
+
 public class ExpenseTrackerModel {
 
   //encapsulation - data integrity
   private List<Transaction> transactions;
   private List<Integer> matchedFilterIndices;
+  private List<ExpenseTrackerModelListener> listeners;
 
   // This is applying the Observer design pattern.                          
   // Specifically, this is the Observable class. 
@@ -16,6 +24,7 @@ public class ExpenseTrackerModel {
   public ExpenseTrackerModel() {
     transactions = new ArrayList<Transaction>();
     matchedFilterIndices = new ArrayList<Integer>();
+    listeners = new ArrayList<>();
   }
 
   public void addTransaction(Transaction t) {
@@ -71,28 +80,27 @@ public class ExpenseTrackerModel {
    */   
   public boolean register(ExpenseTrackerModelListener listener) {
       // For the Observable class, this is one of the methods.
-      //
-      // TODO
+      if (listener != null && !listeners.contains(listener)) {
+        listeners.add(listener);
+        return true; 
+      }
       return false;
   }
 
   public int numberOfListeners() {
       // For testing, this is one of the methods.
-      //
-      //TODO
-      return 0;
+      return listeners.size();
   }
 
   public boolean containsListener(ExpenseTrackerModelListener listener) {
       // For testing, this is one of the methods.
-      //
-      //TODO
-      return false;
+      return listeners.contains(listener);
   }
 
   protected void stateChanged() {
       // For the Observable class, this is one of the methods.
-      //
-      //TODO
+      for (ExpenseTrackerModelListener listener : listeners) {
+         listener.update(this); 
+      }
   }
 }
